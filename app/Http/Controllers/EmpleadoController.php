@@ -25,7 +25,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        return view('/empleados/empleadosForm');
+        return view('empleados.empleadosForm');
     }
 
     /**
@@ -36,7 +36,7 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        Empleado::create($request->all());
+        $empleados = Empleado::create($request->all());
 
         return redirect()->route('empleados.index');
     }
@@ -49,7 +49,8 @@ class EmpleadoController extends Controller
      */
     public function show(empleado $empleado)
     {
-        //
+        return view('empleados.empleadosShow', compact('empleado'));
+        
     }
 
     /**
@@ -60,7 +61,7 @@ class EmpleadoController extends Controller
      */
     public function edit(empleado $empleado)
     {
-        //
+        return view('empleados.empleadosForm', compact('empleado'));
     }
 
     /**
@@ -72,7 +73,14 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, empleado $empleado)
     {
-        //
+        $empleado->nombre = $request->nombre;
+        $empleado->correo = $request->correo;
+        $empleado->fechaDeContratacion = $request->fechaDeContratacion;
+        $empleado->fechaDeNacimiento = $request->fechaDeNacimiento; 
+        $empleado->area = $request->area;
+        $empleado->formacionAcademica = $request->formacionAcademica;
+        $empleado->save();
+        return redirect()->route('empleados.index');
     }
 
     /**
@@ -83,6 +91,7 @@ class EmpleadoController extends Controller
      */
     public function destroy(empleado $empleado)
     {
-        //
+        $empleado->delete();
+        return redirect()->route('empleados.index');
     }
 }

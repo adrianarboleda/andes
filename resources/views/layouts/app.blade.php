@@ -18,6 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/colour-blue.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/colour-green.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/colour-lavander.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">    
 </head>
 <body>
     <div id="app">
