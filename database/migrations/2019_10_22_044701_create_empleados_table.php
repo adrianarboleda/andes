@@ -19,9 +19,13 @@ class CreateEmpleadosTable extends Migration
             $table->string('correo');
             $table->string('area');
             $table->string('formacionAcademica');
-            $table->dateTime('fechaDeNacimiento');
-            $table->dateTime('fechaDeContratacion');
+            $table->date('fechaDeNacimiento');
+            $table->date('fechaDeContratacion');
+            $table->unsignedBigInteger('proyecto_id');
+            $table->foreign('proyecto_id')->references('id')->on('proyectos');
+
             $table->timestamps();
+
         });
     }
 

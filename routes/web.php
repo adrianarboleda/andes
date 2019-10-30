@@ -17,6 +17,12 @@ Route::get('/', function () {
 
 Route::resource('empleados', 'EmpleadoController');
 
+Route::resource('proyectos', 'ProyectoController');
+
+Route::resource('proveedors', 'ProveedorController');
+
+Route::resource('piezas', 'PiezaController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

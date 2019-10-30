@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\empleado;
+use App\Proyecto;
 use Illuminate\Http\Request;
 
 class EmpleadoController extends Controller
@@ -25,7 +26,11 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        return view('empleados.empleadosForm');
+        //$proyecto = Proyecto::all();
+        $proyecto = Proyecto::pluck('nombre','id');
+        return view('empleados.empleadosForm', compact('proyecto'));
+        
+        //return view('empleados.empleadosForm');
     }
 
     /**
@@ -36,8 +41,32 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $empleados = Empleado::create($request->all());
+        //dd($request->input());
+        $request->validate([
+            'nombre' => 'required|min:2|max:265',
+            'edad' => 'numeric',
+            'formacionAcademica' => 'required|min:3|max:50',
+            'correo' => 'email',
+            'fechaDeNacimiento' => 'date',
+            'fechaDeContratacion' => 'date',
+            'proyecto_id' => 'required'
+        ]);
 
+        $empleado = new Empleado([
+            'nombre' => $request->nombre,
+            'edad' => $request->edad,
+            'area' =>$request->area,
+            'formacionAcademica' => $request->formacionAcademica,
+            'correo' => $request->correo,
+            'fechaDeNacimiento' => $request->fechaDeNacimiento,
+            'fechaDeContratacion' => $request->fechaDeContratacion,
+            'proyecto_id' => $request->proyecto_id
+        ]);
+
+        //return $request->proyecto_id;
+        $proyecto = Proyecto::findorfail($request->proyecto_id);
+        $proyecto->empleado()->save($empleado);
+        //$empleados = Empleado::create($request->all());
         return redirect()->route('empleados.index');
     }
 
@@ -59,9 +88,9 @@ class EmpleadoController extends Controller
      * @param  \App\empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function edit(empleado $empleado)
+    public function edit(empleado $empleado, proyecto $proyecto)
     {
-        return view('empleados.empleadosForm', compact('empleado'));
+        return view('empleados.empleadosForm', compact('empleado', 'proyecto'));
     }
 
     /**
@@ -79,6 +108,7 @@ class EmpleadoController extends Controller
         $empleado->fechaDeNacimiento = $request->fechaDeNacimiento; 
         $empleado->area = $request->area;
         $empleado->formacionAcademica = $request->formacionAcademica;
+        $empleado->proyecto_id = $request->proyecto_id;
         $empleado->save();
         return redirect()->route('empleados.index');
     }

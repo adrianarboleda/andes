@@ -17,6 +17,7 @@
                             <th>Formacion Academica</th>
                             <th>Fecha de Nacimiento</th>
                             <th>Fecha de Contratacion</th>
+                            <th>Proyecto</th>
                             <th>Accion</th>
                             </tr>                            
                             </thead>
@@ -30,18 +31,19 @@
                                 <td>{{ $empleado->formacionAcademica }}</td>
                                 <td>{{ $empleado->fechaDeNacimiento->format('d/m/Y') }}</td>
                                 <td>{{ $empleado->fechaDeContratacion->format('d/m/Y') }}</td>
-                                <td><a href="{{route('empleados.show', $empleado->id)}}" class="btn btn-info">Mostrar</a></td>;
-                                <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
+                                <td>{{ $empleado->proyecto_id }}</td>
+                                <td><a href="{{route('empleados.show', $empleado->id)}}" class="btn btn-info">Mostrar</a>
+                                <br>
+                                <!--<div class="btn-group" role="group" aria-label="Basic example">-->
                                     <a href="{{ route('empleados.edit', $empleado->id) }}">
                                         <button type="button" class="btn btn-warning">Edit</button>
-                                    </a>&nbsp;
+                                    </a>&nbsp;<br>
                                     <form action="{{url('empleados', [$empleado->id])}}" method="POST">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="submit" class="btn btn-danger" value="Delete"/>
                                     </form>
-                                </div>
+                                <!--</div>-->
                                 </td>
                                 </tr>
                             @endforeach
